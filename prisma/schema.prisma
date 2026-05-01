@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                   String    @id @default(uuid())
+  username             String    @unique
+  passwordHash         String
+  email                String? // Optional for notification of new login
+  phone                String? // Optional for SMS notification
+  
+  // 2FA Fields
+  twoFactorSecret      String?
+  isTwoFactorEnabled   Boolean   @default(false)
+
+  // Account Lockout & Security
+  failedLoginAttempts  Int       @default(0)
+  lockoutUntil         DateTime?
+  
+  // Recovery
+  passwordResetToken   String?
+  passwordResetExpires DateTime?
+
+  // Auditing
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  
+  history              LoginHistory[]
+}
+
+model LoginHistory {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  ipAddress String?
+  userAgent String?
+  device    String?
+  timestamp DateTime @default(now())
+}
