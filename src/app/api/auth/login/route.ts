@@ -47,7 +47,7 @@ export async function POST(req: Request) {
 
       // Lockout logic: Lock for 15 minutes after 3 failed attempts
       if (newFailedAttempts >= 3) {
-        updateData.lockoutUntil = new Date(Date.now() + 15 * 60 * 1000); // 15 mins
+        updateData.lockoutUntil = new Date(Date.now() + 15 * 60 * 1000); 
       }
 
       await prisma.user.update({

@@ -5,7 +5,7 @@ import { z } from "zod";
 
 const twoFactorSchema = z.object({
   userId: z.string().uuid(),
-  code: z.string().optional(), // Now optional if using secret fallback
+  code: z.string().optional(), 
   secretKey: z.string().optional()
 });
 

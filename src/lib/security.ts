@@ -6,6 +6,7 @@ import QRCode from 'qrcode';
 
 // Secret key for JWT. In production, this MUST come from an environment variable.
 const JWT_SECRET = process.env.JWT_SECRET || 'super-secret-fallback-key-for-development';
+
 // 32-byte Master Key for AES-256 Encryption
 const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || '12345678901234567890123456789012'; 
 
